@@ -22,7 +22,7 @@ export async function POST(req: any, res: any) {
     }
 
     // Password is correct, login successful
-    return new NextResponse(JSON.stringify({ message: "Login successful" }), { status: 200 });
+    return new NextResponse(JSON.stringify({ message: "Login successful", userId: user._id }), { status: 200 });
   } catch (error) {
     console.error("Error logging in:", error);
     return new NextResponse(JSON.stringify({ error: "Internal server error" }), { status: 500 });
