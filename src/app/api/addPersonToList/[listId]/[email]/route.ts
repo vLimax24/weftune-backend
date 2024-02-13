@@ -2,12 +2,12 @@ import connect from "../../../../../../db";
 import List from "../../../../models/list";
 import { NextResponse } from 'next/server';
 
-export const GET = async (
+export const POST = async (
     request: Request,
-    { params }: { params: { listId: string, userId: string } }
+    { params }: { params: { listId: string, email: string } }
   ) => {
     const listId = params.listId
-    const userId = params.userId
+    const email = params.email
     try {
         await connect()
         // Check if the user is already in the list
@@ -16,12 +16,12 @@ export const GET = async (
           return new NextResponse(JSON.stringify({ error: "List not found" }), { status: 404 });
         }
 
-        if (list.users.includes(userId)) {
+        if (list.users.includes(email)) {
           return new NextResponse(JSON.stringify({ error: "User already added to the list" }), { status: 400 });
         }
 
         // Add the user to the list if not already present
-        list.users.push(userId);
+        list.users.push(email);
         const updatedList = await list.save();
 
         return new NextResponse(JSON.stringify(updatedList), { status: 200 });
