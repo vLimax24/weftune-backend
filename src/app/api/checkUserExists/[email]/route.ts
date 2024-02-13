@@ -14,7 +14,7 @@ export const GET = async (
     const user = await User.findOne({ email });
 
     if (!user) {
-      return new NextResponse('wrong', { status: 404 });
+      return new NextResponse('wrong', { status: 200 });
     }
 
     return new NextResponse('true', { status: 200 });
