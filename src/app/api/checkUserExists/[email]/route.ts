@@ -4,14 +4,14 @@ import { NextResponse } from 'next/server';
 
 export const GET = async (
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: { email: string } }
   ) => {
   try {
-    const userId = params.id
+    const email = params.email
 
     await connect();
 
-    const user = await User.findById(userId);
+    const user = await User.findOne({ email });
 
     if (!user) {
       return new NextResponse('false', { status: 404 });
