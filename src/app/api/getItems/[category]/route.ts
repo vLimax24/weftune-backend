@@ -1,12 +1,15 @@
 // api/endpoints/recipe/getAllItems.js
-import connect from "../../../../db";
-import Item from "../../models/item";
+import connect from "../../../../../db";
+import Item from "../../../models/item";
 import { NextResponse } from 'next/server';
 
-export async function GET(req: any, res: any) {
+export const GET = async (
+  request: Request,
+  { params }: { params: { category: string } }
+) => {
   try {
     await connect();
-    const items = await Item.find();
+    const items = await Item.find({ category: params.category});
 
     return new NextResponse(JSON.stringify(items), { status: 200 });
   } catch (error) {
